@@ -1,0 +1,7 @@
+STEPS TO MAKE OCTAVE WORK
+
+Installed via brew FROM SOURCE because of errors with packages
+Installed control pkg
+Installed signal pkg
+
+* Important: installing with default procedure in brew doesn't work with packages!

@@ -1,4 +1,4 @@
-function [n, f] = f_impulse(n1, n2, shift)
+function f = f_step(n1, n2, shift)
 %n1 = input('Lower limit: ')
 %n2 = input('Upper limit: ')
 if nargin == 2
@@ -6,7 +6,7 @@ if nargin == 2
 end
 
 n = n1:n2;
-f = [n==shift];
+f = [n>=shift];
 
 figure;
 stem(n,f);

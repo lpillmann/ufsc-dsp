@@ -1,4 +1,4 @@
-function [n, f] = f_step(n1, n2, shift)
+function f = f_step(n1, n2, shift)
 %n1 = input('Lower limit: ')
 %n2 = input('Upper limit: ')
 if nargin == 2

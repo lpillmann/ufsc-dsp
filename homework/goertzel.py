@@ -57,8 +57,6 @@ def goertzel(samples, sample_rate, *freqs):
         freqs.append(f * sample_rate)
     return freqs, results
 
-    import math
-
 def goertzel_single_freq(samples, sample_rate, f_start, f_end):
     """
     Implementation of the Goertzel algorithm, useful for calculating individual

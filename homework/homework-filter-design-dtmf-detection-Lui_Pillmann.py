@@ -60,6 +60,7 @@ from pylab import *
 import matplotlib.pyplot as plt
 import numpy as np
 import wave
+import os
 import sys
 import simpleaudio as sa
 from goertzel import goertzel
@@ -74,6 +75,9 @@ rcParams['figure.figsize'] = 13, 8 # increases figure size
 # Exemplo de áudio fornecido.
 
 # In[2]:
+os.system('clear')
+print('**Atenção**: a execução é pausada a cada vez que um gráfico é criado. Para continuar, deve-se fechar a janela com a figura.')
+print()
 
 spf = wave.open('testall_mono.wav','r') # Sample file provided
 
@@ -104,12 +108,15 @@ print('Frequência de Nyquist    (Hz): ' + str(nyq_rate))
 print('Bits por amostra             : ' + str(bytes_per_sample*8))
 print('Duração                   (s): ' + str(duration))
 
-#plt.figure(1)
+print()
+print('--- Amostras do sinal de voz ---')
+print('(!) Feche a janela com gráfico para continuar...')
 plt.xlabel('Samples (n)')
 plt.title('Voice signal')
 plt.plot(s)
+#plt.ion()
+#plt.draw()
 plt.show()
-
 
 # ## 3. Espectro do sinal de voz de entrada
 
@@ -123,12 +130,16 @@ freq = np.fft.fftfreq(n, d=timestep)
 #ft_pure = fft(s_pure)/len(s_pure)
 ft_s = fft(s)/len(s)
 
+print()
+print('--- Espectro do sinal de voz ---')
 #plt.plot(20*log10(abs(ft_pure)))
 plt.plot(freq, 20*log10(abs(ft_s)))
 plt.title('Voice signal')
 plt.ylabel('Magnitude (dB)')
 plt.xlabel('Frequency (Hz)')
 #plt.legend(['voice signal wave FFT'], loc='best')
+#plt.ion()
+#plt.draw()
 plt.show()
 
 
@@ -146,6 +157,8 @@ lpf1 = firwin(numtaps=40, cutoff=7000.0, window='hamming', nyq=nyq_rate) # cutof
 from scipy.signal import freqz
 w, h = freqz(lpf1)
 
+print()
+print('--- Resposta à frequência do filtro projetado ---')
 plt.plot((w/(2*pi))*sample_rate, 20*log10(abs(h)))
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Gain (dB)')
@@ -184,6 +197,8 @@ freq = np.fft.fftfreq(n, d=timestep)
 ft = fft(s)/len(s)
 ft1 = fft(s1)/len(s1)
 
+print()
+print('--- Espectro do sinal de voz filtrado ---')
 plt.plot(freq, 20*log10(abs(ft)))
 plt.plot(freq, 20*log10(abs(ft1)))
 plt.title('Voice signal before and after antialiasing filter')
@@ -194,7 +209,8 @@ plt.show()
 
 
 # ## Ouvir sinal de entrada filtrado
-
+print()
+print('--- Reprodução do sinal de entrada filtrado ---')
 # In[8]:
 
 # Makes array c_contiguous in memory
@@ -229,6 +245,8 @@ freq = np.fft.fftfreq(n, d=timestep)
 #ft1 = fft(s1)/len(s1) # obs.: already calculated previously in the code
 ft2 = fft(s_down)/len(s_down)
 
+print()
+print('--- Espectro do sinal dizimado ---')
 #plt.plot(20*log10(abs(ft1)))
 plt.plot(freq, 20*log10(abs(ft2)))
 plt.title('Decimated signal')
@@ -305,6 +323,9 @@ def recognize_digit(power_l, power_c):
 
 # In[13]:
 
+print()
+print('--- Detecção de tons DTMF ---')
+
 # Analysis parameters
 SAMPLE_RATE = sample_rate_down
 WINDOW_SIZE = 256 
@@ -370,6 +391,8 @@ g = resample(s_down, len(s))  # Upsamples to number of samples in original signa
 
 
 # In[15]:
+print()
+print('--- Espectro do sinal de voz reamostrado ---')
 
 n = g.size
 timestep = 1.0 / sample_rate
@@ -387,6 +410,8 @@ plt.show()
 
 # In[16]:
 
+print()
+print('--- Reprodução do sinal de saída ---')
 # Makes array c_contiguous in memory
 g = np.ascontiguousarray(g, dtype=np.int16)
 
